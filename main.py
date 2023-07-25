@@ -1,16 +1,18 @@
-# This is a sample Python script.
+import numpy as np
+def calculate_snr(contaminated_signal, clean_eeg, artifact_segment):
+    # Calculate the signal power (clean EEG)
+    signal_power = np.sum(clean_eeg ** 2)
+    # Calculate the noise power (artifact segment)
+    noise_power = np.sum((contaminated_signal - clean_eeg) ** 2)
+    # Calculate the SNR in dB (RMS FORMULA)
+    snr_db = 10 * np.log10(signal_power / noise_power)
+    return snr_db
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+# Example usage:
+clean_eeg = np.array([1.0, 2.0, 3.0, 4.0, 5.0])
+artifact_segment = np.array([0.1, 0.2, 0.3, 0.2, 0.1])
+λ = 0.5
 
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+contaminated_signal = clean_eeg + λ * artifact_segment
+snr = calculate_snr(contaminated_signal, clean_eeg, artifact_segment)
+print("SNR:", snr)
