@@ -25,14 +25,15 @@
 # print(random_decimal)
 
 import numpy as np
+from PyEMD import EMD
+import matplotlib.pyplot as plt
 
-# Example NumPy array
-my_array = np.array([1, 2, 3, 4, 5])
-
-# Scalar value to multiply
-scalar_value = 2
-
-# Multiply the scalar value to the array using np.multiply()
-result_array = np.multiply(my_array, scalar_value)
-
-print(result_array)
+T = np.linspace(0, 1, 100)
+S = np.sin(2*2*np.pi*T)
+emd = EMD(extrema_detection='parabol')
+IMFs = emd.emd(S)
+IMFs.shape
+print(IMFs.shape)
+plt.plot(T,S)
+plt.plot(IMFs)
+plt.show()
